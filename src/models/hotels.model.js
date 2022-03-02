@@ -1,10 +1,8 @@
 const mongoose = require("mongoose");
 const schema = new mongoose.Schema({
-  fullname: "string",
-  email: "string",
+  name: "string",
+  location: "string",
   phone: "string",
-  username: "string",
-  password: "string",
   createdAt: {
     type: Date,
     default: Date.now,
@@ -14,5 +12,5 @@ const schema = new mongoose.Schema({
     default: Date.now,
   },
 });
-const accounts = mongoose.model("accounts", schema);
-module.exports = accounts;
+const hotels = mongoose.model("hotels", schema);
+module.exports = hotels;

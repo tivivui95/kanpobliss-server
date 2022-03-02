@@ -42,12 +42,11 @@ class Accounts {
       message: `create account successfully !`,
     };
   };
-  destroyAccount = async (email) => {
-    const findAccount = await accountsModel.findOne({ email });
-    console.log(findAccount);
+  destroyAccount = async (id) => {
+    const findAccount = await accountsModel.findOne({ _id: id });
     try {
       if (findAccount) {
-        await accountsModel.deleteOne({ email });
+        await accountsModel.deleteOne({ _id: id });
         return {
           statusCode: 200,
           message: `delete accounts success <3`,
@@ -65,18 +64,22 @@ class Accounts {
       };
     }
   };
-  updateAccount = async ({ email, password, username, phone, fullname }) => {
-    const findAccount = await accountsModel.findOne({ email });
+  updateAccount = async ({
+    email,
+    password,
+    username,
+    phone,
+    fullname,
+    id,
+  }) => {
     try {
-      if (findAccount) {
-        await accountsModel.updateOne({
-          email,
-          password,
-          username,
-          phone,
-          fullname,
-        });
-      }
+      const findAccount = await accountsModel.findByIdAndUpdate(id, {
+        email,
+        password,
+        username,
+        phone,
+        fullname,
+      });
       return {
         statusCode: 200,
         message: `update account success !`,
@@ -88,9 +91,14 @@ class Accounts {
       };
     }
   };
-  getAllAccounts = async () => {
-    const allAccounts = await accountsModel.find({});
+  getAllAccounts = async (id) => {
+    const paginate = 7;
+    const allAccounts = await accountsModel
+      .find({})
+      .skip((id - 1) * paginate)
+      .limit(paginate);
     try {
+      console.log(allAccounts);
       if (allAccounts) {
         return {
           statusCode: 200,

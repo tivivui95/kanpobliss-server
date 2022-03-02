@@ -1,6 +1,7 @@
 const accountsServer = require("./../services/accounts.service");
 class Accounts {
   createAccount = async (req, res) => {
+    console.log("xxx");
     const { fullname, email, phone, username, re_password, password } =
       req.body;
     const result = await accountsServer.createAccounts({
@@ -23,26 +24,28 @@ class Accounts {
     });
   };
   destroyAccount = async (req, res) => {
-    const { email } = req.body;
-    if (email) {
-      const result = await accountsServer.destroyAccount(email);
+    const { id } = req.params;
+    if (id) {
+      const result = await accountsServer.destroyAccount(id);
       return res.json({ result });
     }
   };
   updateAccount = async (req, res) => {
     console.log(123);
-    const { email, password, username, phone, fullname } = req.body;
+    const { email, password, username, phone, fullname, id } = req.body;
     const result = await accountsServer.updateAccount({
       email,
       password,
       username,
       phone,
       fullname,
+      id,
     });
     return res.json(result);
   };
   getAllAccounts = async (req, res) => {
-    const result = await accountsServer.getAllAccounts();
+    const id = req.params.id ? req.params.id : 1;
+    const result = await accountsServer.getAllAccounts(id);
     return res.json({ result });
   };
 }
