@@ -1,6 +1,6 @@
-const authen = require("./../authentication/authenCreateAccount");
-const hash = require("./../authentication/hashPassword");
-const accountsModel = require("./../models/accounts.model");
+const authen = require("../authentication/authenCreateAccount");
+const hash = require("../authentication/hashPassword");
+const accountsModel = require("../models/accounts.model");
 class Accounts {
   createAccounts = async ({
     fullname,
@@ -73,6 +73,7 @@ class Accounts {
     id,
   }) => {
     try {
+      const xxx = new accountsModel();
       const findAccount = await accountsModel.findByIdAndUpdate(id, {
         email,
         password,

@@ -1,4 +1,4 @@
-const hotelService = require("./../services/hotel.services");
+const hotelService = require("../services/hotel.service");
 class Hotel {
   createHotel = async (req, res) => {
     const { name, location, phone } = req.body;

@@ -1,4 +1,4 @@
-const accountsServer = require("./../services/accounts.service");
+const accountsServer = require("../services/account.service");
 class Accounts {
   createAccount = async (req, res) => {
     console.log("xxx");
