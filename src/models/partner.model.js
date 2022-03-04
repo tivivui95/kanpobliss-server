@@ -7,9 +7,7 @@ const schema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  type: {
-    type: [String],
-  },
+  type: [{ type: String }],
   updateAt: {
     type: Date,
     default: Date.now,

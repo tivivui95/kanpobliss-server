@@ -5,15 +5,21 @@ class Partner {
       if (!name || !objType || !phone || !location) {
         return {
           statusCode: 400,
-          message: `name, objType, phone, location fiels cannot empty !!!`,
+          message: `name, type, phone, and location cannot empty !!!`,
         };
       }
-      await partnerModel.create({ name, type, phone, location });
+      await partnerModel.create({
+        type: objType,
+        name,
+        phone,
+        location,
+      });
       return {
         statusCode: 200,
         message: `create partner success `,
       };
     } catch (error) {
+      console.log(error);
       return {
         statusCode: 400,
         message: `create partner fail !`,
@@ -27,7 +33,7 @@ class Partner {
         await partnerModel.findByIdAndDelete(id);
         return {
           statusCode: 200,
-          messgae: `delete partner success`,
+          message: `delete partner success`,
         };
       }
       return {

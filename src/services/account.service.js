@@ -9,6 +9,7 @@ class Accounts {
     username,
     re_password,
     password,
+    role,
   }) => {
     const result = await authen.authenCreateAccounts({
       fullname,
@@ -17,6 +18,7 @@ class Accounts {
       username,
       re_password,
       password,
+      role,
     });
     if (result.error) {
       return result;
@@ -71,6 +73,7 @@ class Accounts {
     phone,
     fullname,
     id,
+    role,
   }) => {
     try {
       const xxx = new accountsModel();
@@ -80,6 +83,7 @@ class Accounts {
         username,
         phone,
         fullname,
+        role,
       });
       return {
         statusCode: 200,

@@ -1,8 +1,7 @@
 const accountsServer = require("../services/account.service");
 class Accounts {
   createAccount = async (req, res) => {
-    console.log("xxx");
-    const { fullname, email, phone, username, re_password, password } =
+    const { fullname, email, phone, username, re_password, password, role } =
       req.body;
     const result = await accountsServer.createAccounts({
       fullname,
@@ -11,6 +10,7 @@ class Accounts {
       username,
       re_password,
       password,
+      role,
     });
     if (result.error) {
       console.log(result);
@@ -32,7 +32,7 @@ class Accounts {
   };
   updateAccount = async (req, res) => {
     console.log(123);
-    const { email, password, username, phone, fullname, id } = req.body;
+    const { email, password, username, phone, fullname, id, role } = req.body;
     const result = await accountsServer.updateAccount({
       email,
       password,
@@ -40,6 +40,7 @@ class Accounts {
       phone,
       fullname,
       id,
+      role,
     });
     return res.json(result);
   };

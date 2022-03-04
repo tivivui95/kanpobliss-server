@@ -12,7 +12,6 @@ class Partner {
   };
   deletePartner = async (req, res) => {
     const { id } = req.params;
-    console.log(id);
     const result = await partnerService.destroyPartner(id);
     return res.json({ result });
   };

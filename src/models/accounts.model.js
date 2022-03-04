@@ -5,6 +5,10 @@ const schema = new mongoose.Schema({
   phone: "string",
   username: "string",
   password: "string",
+  role: {
+    type: "string",
+    default: "customer",
+  },
   createdAt: {
     type: Date,
     default: Date.now,
