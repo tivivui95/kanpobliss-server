@@ -32,7 +32,16 @@ class Accounts {
   };
   updateAccount = async (req, res) => {
     console.log(123);
-    const { email, password, username, phone, fullname, id, role } = req.body;
+    const {
+      email,
+      password,
+      username,
+      phone,
+      fullname,
+      id,
+      role,
+      re_password,
+    } = req.body;
     const result = await accountsServer.updateAccount({
       email,
       password,
@@ -41,8 +50,9 @@ class Accounts {
       fullname,
       id,
       role,
+      re_password,
     });
-    return res.json(result);
+    return res.json({ result });
   };
   getAllAccounts = async (req, res) => {
     const id = req.params.id ? req.params.id : 1;

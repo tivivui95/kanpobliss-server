@@ -38,6 +38,7 @@ class Accounts {
       phone,
       username,
       password,
+      role,
     });
     return {
       statusCode: 200,
@@ -74,25 +75,48 @@ class Accounts {
     fullname,
     id,
     role,
+    re_password,
   }) => {
     try {
-      const xxx = new accountsModel();
-      const findAccount = await accountsModel.findByIdAndUpdate(id, {
+      const findAccount = await accountsModel.findOne({ email });
+      if (findAccount) {
+        return {
+          statusCode: 403,
+          message: `The account already exists in the system, please re-register`,
+        };
+      }
+      const result = await authen.authenCreateAccounts({
+        fullname,
+        email,
+        phone,
+        username,
+        re_password,
+        password,
+        role,
+      });
+
+      if (result.error) {
+        return result;
+      }
+      const hashPasswordResult = await hash.hassPassword(password);
+      password = hashPasswordResult;
+      await accountsModel.findByIdAndUpdate(id, {
         email,
         password,
         username,
         phone,
         fullname,
+        id,
         role,
       });
       return {
         statusCode: 200,
-        message: `update account success !`,
+        message: `update account success `,
       };
     } catch (error) {
       return {
         statusCode: 400,
-        message: `update account fail !`,
+        message: `update account fail `,
       };
     }
   };
