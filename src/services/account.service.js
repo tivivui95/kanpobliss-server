@@ -11,6 +11,7 @@ class Accounts {
     re_password,
     password,
     role,
+    avatar,
   }) => {
     const result = await authen.authenCreateAccounts({
       fullname,
@@ -33,14 +34,26 @@ class Accounts {
     }
     const hashPasswordResult = await hash.hassPassword(password);
     password = hashPasswordResult;
-    await accountsModel.create({
-      fullname,
-      email,
-      phone,
-      username,
-      password,
-      role,
-    });
+    if (avatar) {
+      await accountsModel.create({
+        fullname,
+        email,
+        phone,
+        username,
+        password,
+        role,
+        avatar,
+      });
+    } else {
+      await accountsModel.create({
+        fullname,
+        email,
+        phone,
+        username,
+        password,
+        role,
+      });
+    }
     return {
       statusCode: 200,
       message: `create account successfully !`,
@@ -77,6 +90,7 @@ class Accounts {
     id,
     role,
     re_password,
+    avatar,
   }) => {
     try {
       if (!password) {
@@ -92,14 +106,26 @@ class Accounts {
         if (resultAuth.error) {
           result = resultAuth;
         } else {
-          await accountsModel.findByIdAndUpdate(id, {
-            email,
-            username,
-            phone,
-            fullname,
-            id,
-            role,
-          });
+          if (avatar) {
+            await accountsModel.findByIdAndUpdate(id, {
+              email,
+              username,
+              phone,
+              fullname,
+              id,
+              role,
+              avatar,
+            });
+          } else {
+            await accountsModel.findByIdAndUpdate(id, {
+              email,
+              username,
+              phone,
+              fullname,
+              id,
+              role,
+            });
+          }
           result = {
             statusCode: 200,
             message: `update account success `,

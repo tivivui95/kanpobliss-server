@@ -5,6 +5,11 @@ const schema = new mongoose.Schema({
   phone: "string",
   username: "string",
   password: "string",
+  avatar: {
+    type: String,
+    default:
+      "https://haycafe.vn/wp-content/uploads/2021/11/Anh-avatar-dep-chat-lam-hinh-dai-dien.jpg",
+  },
   role: {
     type: "string",
     default: "customer",

@@ -3,7 +3,11 @@ const schema = new mongoose.Schema({
   name: "string",
   location: "string",
   phone: "string",
-  images: [{ type: String }],
+  images: [
+    {
+      name: String,
+    },
+  ],
   type: [{ type: String }],
   updateAt: {
     type: Date,

@@ -1,19 +1,13 @@
 const partnerModel = require("./../models/partner.model");
 class Partner {
-  createPartner = async ({ name, objType, phone, location, images }) => {
+  createPartner = async ({ type, name, phone, location, images }) => {
     try {
-      if (!name || !objType || !phone || !location) {
-        return {
-          statusCode: 400,
-          message: `name, type, phone, and location cannot empty !!!`,
-        };
-      }
       await partnerModel.create({
-        type: objType,
+        type,
         name,
         phone,
         location,
-        images: images,
+        images,
       });
       return {
         statusCode: 200,
@@ -42,13 +36,14 @@ class Partner {
         message: `delete partner fail `,
       };
     } catch (error) {
+      console.log(error);
       return {
         statusCode: 400,
         message: `delete partner fail `,
       };
     }
   };
-  updatePartner = async ({ name, id, objType, phone, location }) => {
+  updatePartner = async ({ name, id, type, phone, location, images }) => {
     try {
       if (!id) {
         return {
@@ -58,15 +53,17 @@ class Partner {
       }
       await partnerModel.findByIdAndUpdate(id, {
         name,
-        type: objType,
+        type,
         phone,
         location,
+        images,
       });
       return {
         statusCode: 200,
         message: `update partner success`,
       };
     } catch (error) {
+      console.log(error);
       return {
         statusCode: 400,
         message: `update partner fail`,
