@@ -1,6 +1,7 @@
 const authen = require("../authentication/authenCreateAccount");
 const hash = require("../authentication/hashPassword");
 const accountsModel = require("../models/accounts.model");
+const authenUpdateAccount = require("./../authentication/authenUpdateAccount");
 class Accounts {
   createAccounts = async ({
     fullname,
@@ -78,12 +79,33 @@ class Accounts {
     re_password,
   }) => {
     try {
-      const findAccount = await accountsModel.findOne({ email });
-      if (findAccount) {
-        return {
-          statusCode: 403,
-          message: `The account already exists in the system, please re-register`,
-        };
+      if (!password) {
+        let result;
+        const resultAuth = await authenUpdateAccount.authenUpdateAccount({
+          email,
+          username,
+          phone,
+          fullname,
+          id,
+          role,
+        });
+        if (resultAuth.error) {
+          result = resultAuth;
+        } else {
+          await accountsModel.findByIdAndUpdate(id, {
+            email,
+            username,
+            phone,
+            fullname,
+            id,
+            role,
+          });
+          result = {
+            statusCode: 200,
+            message: `update account success `,
+          };
+        }
+        return result;
       }
       const result = await authen.authenCreateAccounts({
         fullname,

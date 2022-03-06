@@ -3,12 +3,13 @@ const schema = new mongoose.Schema({
   name: "string",
   location: "string",
   phone: "string",
-  createdAt: {
+  images: [{ type: String }],
+  type: [{ type: String }],
+  updateAt: {
     type: Date,
     default: Date.now,
   },
-  type: [{ type: String }],
-  updateAt: {
+  createdAt: {
     type: Date,
     default: Date.now,
   },

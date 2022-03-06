@@ -23,6 +23,7 @@ class Hotel {
   destroyeHotel = async (id) => {
     try {
       const findHotel = await hotel.findOne({ _id: id });
+      console.log(findHotel);
       if (!findHotel) {
         return {
           statusCode: 400,

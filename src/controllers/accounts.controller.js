@@ -31,7 +31,6 @@ class Accounts {
     }
   };
   updateAccount = async (req, res) => {
-    console.log(123);
     const {
       email,
       password,

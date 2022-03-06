@@ -11,5 +11,5 @@ app.use(express.urlencoded({ extended: true }));
 database.connect();
 route.run(app);
 app.listen(PORT, () => {
-  console.log(`App is running  link http://localhost:${PORT}`);
+  console.log(`App is running on link http://localhost:${PORT}`);
 });

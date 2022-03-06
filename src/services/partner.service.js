@@ -1,6 +1,6 @@
 const partnerModel = require("./../models/partner.model");
 class Partner {
-  createPartner = async ({ name, objType, phone, location }) => {
+  createPartner = async ({ name, objType, phone, location, images }) => {
     try {
       if (!name || !objType || !phone || !location) {
         return {
@@ -13,6 +13,7 @@ class Partner {
         name,
         phone,
         location,
+        images: images,
       });
       return {
         statusCode: 200,
@@ -47,8 +48,7 @@ class Partner {
       };
     }
   };
-  updatePartner = async ({ name, id, type, phone, location }) => {
-    console.log(id);
+  updatePartner = async ({ name, id, objType, phone, location }) => {
     try {
       if (!id) {
         return {
@@ -58,7 +58,7 @@ class Partner {
       }
       await partnerModel.findByIdAndUpdate(id, {
         name,
-        type,
+        type: objType,
         phone,
         location,
       });
