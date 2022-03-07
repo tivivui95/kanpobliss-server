@@ -13,51 +13,53 @@ class Accounts {
     role,
     avatar,
   }) => {
-    const result = await authen.authenCreateAccounts({
-      fullname,
-      email,
-      phone,
-      username,
-      re_password,
-      password,
-      role,
-    });
-    if (result.error) {
-      return result;
-    }
-    const findAccount = await accountsModel.findOne({ email });
-    if (findAccount) {
+    try {
+      const result = await authen.authenCreateAccounts({
+        fullname,
+        email,
+        phone,
+        username,
+        re_password,
+        password,
+        role,
+      });
+      if (result.error) {
+        return result;
+      }
+      const findAccount = await accountsModel.findOne({ email });
+      if (findAccount) {
+        return {
+          statusCode: 403,
+          message: `The account already exists in the system, please re-register`,
+        };
+      }
+      const hashPasswordResult = await hash.hassPassword(password);
+      password = hashPasswordResult;
+      if (avatar) {
+        await accountsModel.create({
+          fullname,
+          email,
+          phone,
+          username,
+          password,
+          role,
+          avatar,
+        });
+      } else {
+        await accountsModel.create({
+          fullname,
+          email,
+          phone,
+          username,
+          password,
+          role,
+        });
+      }
       return {
-        statusCode: 403,
-        message: `The account already exists in the system, please re-register`,
+        statusCode: 200,
+        message: `create account successfully !`,
       };
-    }
-    const hashPasswordResult = await hash.hassPassword(password);
-    password = hashPasswordResult;
-    if (avatar) {
-      await accountsModel.create({
-        fullname,
-        email,
-        phone,
-        username,
-        password,
-        role,
-        avatar,
-      });
-    } else {
-      await accountsModel.create({
-        fullname,
-        email,
-        phone,
-        username,
-        password,
-        role,
-      });
-    }
-    return {
-      statusCode: 200,
-      message: `create account successfully !`,
-    };
+    } catch (error) {}
   };
   destroyAccount = async (id) => {
     const findAccount = await accountsModel.findOne({ _id: id });

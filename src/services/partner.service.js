@@ -71,6 +71,8 @@ class Partner {
     }
   };
   getAllPartner = async (id) => {
+    id = id ? id : 1;
+    console.log(id);
     try {
       const paginate = 5;
       const allPartner = await partnerModel

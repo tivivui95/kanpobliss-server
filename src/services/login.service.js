@@ -1,5 +1,6 @@
 const accountModel = require("./../models/accounts.model");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 class Login {
   login = async ({ email, password }) => {
     try {
@@ -23,7 +24,12 @@ class Login {
         };
       }
       const result = await bcrypt.compare(password, findAccount.password);
-
+      const { _id, role, fullname, username, phone } = findAccount;
+      var token = await jwt.sign(
+        { _id, role, fullname, username, phone },
+        process.env.SECRET_KEY,
+        { expiresIn: "30s" }
+      );
       if (result) {
         delete findAccount.password;
         console.log(123);
@@ -31,6 +37,7 @@ class Login {
           statusCode: 200,
           message: `login success `,
           account: findAccount,
+          token,
         };
       }
       return {
@@ -38,6 +45,7 @@ class Login {
         message: "Password is incorrect, please re-enter !!!",
       };
     } catch (error) {
+      console.log(error);
       return {
         statusCode: 400,
         message: "Login fail !",
