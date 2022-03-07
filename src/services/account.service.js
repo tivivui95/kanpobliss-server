@@ -177,7 +177,6 @@ class Accounts {
       .skip((id - 1) * paginate)
       .limit(paginate);
     try {
-      console.log(allAccounts);
       if (allAccounts) {
         return {
           statusCode: 200,

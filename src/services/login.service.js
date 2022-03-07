@@ -7,7 +7,7 @@ class Login {
       if (!email || !password) {
         return {
           statusCode: 400,
-          message: `email and password cannot empty`,
+          message: `Email and Password cannot empty`,
         };
       }
       const findAccount = await accountModel.findOne({ email });
@@ -27,15 +27,13 @@ class Login {
       const { _id, role, fullname, username, phone } = findAccount;
       var token = await jwt.sign(
         { _id, role, fullname, username, phone },
-        process.env.SECRET_KEY,
-        { expiresIn: "2000s" }
+        process.env.SECRET_KEY
       );
       if (result) {
         delete findAccount.password;
-        console.log(123);
         return {
           statusCode: 200,
-          message: `login success `,
+          message: `Login Successfully `,
           account: findAccount,
           token,
         };

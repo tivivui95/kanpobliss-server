@@ -5,6 +5,11 @@ const PORT = process.env.PORT || 4000;
 const database = require("./connectDb/connect.db");
 const route = require("./routes/index");
 const cors = require("cors");
+app.get("/", (req, res) => {
+  return res.json({
+    message: `hello world`,
+  });
+});
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
