@@ -28,7 +28,7 @@ class Login {
       var token = await jwt.sign(
         { _id, role, fullname, username, phone },
         process.env.SECRET_KEY,
-        { expiresIn: "30s" }
+        { expiresIn: "5p" }
       );
       if (result) {
         delete findAccount.password;
