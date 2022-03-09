@@ -59,7 +59,9 @@ class Accounts {
         statusCode: 200,
         message: `create account successfully !`,
       };
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
   destroyAccount = async (id) => {
     const findAccount = await accountsModel.findOne({ _id: id });
@@ -171,7 +173,7 @@ class Accounts {
     }
   };
   getAllAccounts = async (id) => {
-    const paginate = 7;
+    const paginate = 10;
     const allAccounts = await accountsModel
       .find({})
       .skip((id - 1) * paginate)

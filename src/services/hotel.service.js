@@ -1,19 +1,33 @@
 const hotel = require("../models/hotels.model");
+const authen = require("./../authentication/authenCreateAccount");
 class Hotel {
-  createHotel = async ({ name, location, phone }) => {
+  createHotel = async ({ name, location, phone, email, qr }) => {
     try {
-      if (!name || !location || !phone) {
+      if (!name || !location || !phone || !email) {
         return {
           statusCode: 400,
           message: `Name or location or phone cannot be empty !`,
         };
       }
-      await hotel.create({ name, location, phone });
+      const findEmailHotel = await hotel.findOne({ email });
+      if (findEmailHotel) {
+        return {
+          statusCode: 403,
+          message: `The account already exists in the system, please re-register`,
+        };
+      }
+      const authenEmail = await authen.authenCreateAccounts({ email });
+
+      if (authenEmail.error) {
+        return authenEmail;
+      }
+      await hotel.create({ name, location, phone, email, qr });
       return {
         statusCode: 200,
         message: `create hotel success!`,
       };
     } catch (error) {
+      console.log(error);
       return {
         statusCode: 400,
         message: `create hotel fail !`,
@@ -66,7 +80,7 @@ class Hotel {
   };
   getAllHotels = async (id) => {
     try {
-      const paginate = 5;
+      const paginate = 10;
       const allHotels = await hotel
         .find({})
         .skip((id - 1) * paginate)

@@ -1,9 +1,15 @@
 const hotelService = require("../services/hotel.service");
 class Hotel {
   createHotel = async (req, res) => {
-    const { name, location, phone } = req.body;
-    console.log(req.body);
-    const result = await hotelService.createHotel({ name, location, phone });
+    const { name, location, phone, email, qr } = req.body;
+    console.log(qr);
+    const result = await hotelService.createHotel({
+      name,
+      location,
+      phone,
+      email,
+      qr,
+    });
     return res.json({
       result,
     });
