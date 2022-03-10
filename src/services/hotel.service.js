@@ -24,13 +24,13 @@ class Hotel {
       await hotel.create({ name, location, phone, email, qr });
       return {
         statusCode: 200,
-        message: `create hotel success!`,
+        message: `Create hotel success!`,
       };
     } catch (error) {
       console.log(error);
       return {
         statusCode: 400,
-        message: `create hotel fail !`,
+        message: `Create hotel fail !`,
       };
     }
   };
@@ -41,18 +41,18 @@ class Hotel {
       if (!findHotel) {
         return {
           statusCode: 400,
-          message: `hotel not found`,
+          message: `Hotel not found`,
         };
       }
       await hotel.findByIdAndDelete({ _id: id });
       return {
         statusCode: 200,
-        message: `delete hotel success`,
+        message: `Delete hotel success`,
       };
     } catch (error) {
       return {
         statusCode: 400,
-        message: `delete hotel fail`,
+        message: `Delete hotel fail`,
       };
     }
   };
@@ -63,13 +63,13 @@ class Hotel {
       if (!findHotel) {
         return {
           statusCode: 400,
-          message: `hotel not found`,
+          message: `Hotel not found`,
         };
       }
       await hotel.findByIdAndUpdate(id, { name, location, phone });
       return {
         statusCode: 200,
-        message: `update hotel info success`,
+        message: `Update hotel info success`,
       };
     } catch (error) {
       return {
@@ -79,22 +79,33 @@ class Hotel {
     }
   };
   getAllHotels = async (id) => {
+    console.log(id);
     try {
-      const paginate = 10;
-      const allHotels = await hotel
-        .find({})
-        .skip((id - 1) * paginate)
-        .limit(paginate);
-      if (allHotels) {
-        return {
-          statusCode: 200,
-          hotels: allHotels,
-        };
+      if (id !== "null") {
+        const paginate = 10;
+        const allHotels = await hotel
+          .find({})
+          .skip((id - 1) * paginate)
+          .limit(paginate);
+        if (allHotels) {
+          return {
+            statusCode: 200,
+            hotels: allHotels,
+          };
+        }
+      } else {
+        const allHotels = await hotel.find({});
+        if (allHotels) {
+          return {
+            statusCode: 200,
+            hotels: allHotels,
+          };
+        }
       }
     } catch (error) {
       return {
         statusCode: 400,
-        message: `get all accounts fail !`,
+        message: `Get all accounts fail !`,
       };
     }
   };

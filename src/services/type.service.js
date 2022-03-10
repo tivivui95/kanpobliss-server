@@ -51,7 +51,7 @@ class Type {
       await typeModel.findByIdAndUpdate(id, { name });
       return {
         statusCode: 200,
-        message: `update type success`,
+        message: `Update type success`,
       };
     } catch (error) {
       return {
