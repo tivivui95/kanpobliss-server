@@ -1,23 +1,48 @@
 const partnerModel = require("./../models/partner.model");
+const authen = require("./../authentication/authenCreateAccount");
+const hotelsModel = require("./../models/hotels.model");
+const hotels = require("./../models/hotels.model");
 class Partner {
-  createPartner = async ({ type, name, phone, location, images }) => {
+  createPartner = async ({ type, name, phone, location, images, email }) => {
     try {
+      const result = await authen.authenCreateAccounts({ email });
+      if (result.error) {
+        return result;
+      }
+      const findHotels = await hotelsModel.findOne({ email });
+      if (!findHotels) {
+        return {
+          statusCode: 400,
+          message: `Hotel has not been created, please create hotel before creating partners`,
+        };
+      }
+      const findPartner = await partnerModel.findOne({ email });
+      console.log(findPartner);
+      if (findPartner) {
+        return {
+          statusCode: 400,
+          message: `Partner already exists in the system, please update, do not create new !!!`,
+        };
+      }
+
       await partnerModel.create({
         type,
         name,
         phone,
         location,
         images,
+        idHotel: findHotels._id,
+        email,
       });
       return {
         statusCode: 200,
-        message: `create partner success `,
+        message: `Create partner success `,
       };
     } catch (error) {
       console.log(error);
       return {
         statusCode: 400,
-        message: `create partner fail !`,
+        message: `Create partner fail !`,
       };
     }
   };
@@ -48,7 +73,7 @@ class Partner {
       if (!id) {
         return {
           statusCode: 400,
-          message: `update partner fail`,
+          message: `Update partner fail`,
         };
       }
       await partnerModel.findByIdAndUpdate(id, {
@@ -60,13 +85,13 @@ class Partner {
       });
       return {
         statusCode: 200,
-        message: `update partner success`,
+        message: `Update partner success`,
       };
     } catch (error) {
       console.log(error);
       return {
         statusCode: 400,
-        message: `update partner fail`,
+        message: `Update partner fail`,
       };
     }
   };
@@ -87,7 +112,7 @@ class Partner {
     } catch (error) {
       return {
         statusCode: 400,
-        message: `get all accounts fail !`,
+        message: `Get all accounts fail !`,
       };
     }
   };

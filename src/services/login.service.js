@@ -2,7 +2,7 @@ const accountModel = require("./../models/accounts.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 class Login {
-  login = async ({ email, password }) => {
+  login = async ({ email, password, quiz }) => {
     try {
       if (!email || !password) {
         return {
@@ -25,10 +25,15 @@ class Login {
       }
       const result = await bcrypt.compare(password, findAccount.password);
       const { _id, role, fullname, username, phone } = findAccount;
+      if (quiz) {
+        findAccount.quiz = quiz;
+        findAccount.save();
+      }
       var token = await jwt.sign(
         { _id, role, fullname, username, phone },
         process.env.SECRET_KEY
       );
+
       if (result) {
         delete findAccount.password;
         return {

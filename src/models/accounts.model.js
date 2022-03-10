@@ -5,6 +5,12 @@ const schema = new mongoose.Schema({
   phone: "string",
   username: "string",
   password: "string",
+  quiz: [
+    {
+      name: String,
+      result: Boolean,
+    },
+  ],
   avatar: {
     type: String,
     default:

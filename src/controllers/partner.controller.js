@@ -1,13 +1,14 @@
 const partnerService = require("./../services/partner.service");
 class Partner {
   createPartner = async (req, res) => {
-    const { name, type, phone, location, images } = req.body;
+    const { name, type, phone, location, images, email } = req.body;
     const result = await partnerService.createPartner({
       name,
       type,
       phone,
       location,
       images,
+      email,
     });
     return res.json({ result });
   };

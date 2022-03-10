@@ -8,6 +8,8 @@ const schema = new mongoose.Schema({
       name: String,
     },
   ],
+  email: "string",
+  idHotel: "string",
   type: [{ type: String }],
   updateAt: {
     type: Date,
