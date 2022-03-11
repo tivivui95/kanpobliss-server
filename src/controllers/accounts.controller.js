@@ -51,6 +51,7 @@ class Accounts {
       re_password,
       avatar,
     } = req.body;
+    console.log(avatar);
     const result = await accountsServer.updateAccount({
       email,
       password,
