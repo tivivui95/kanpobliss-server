@@ -54,6 +54,7 @@ class Accounts {
           username,
           password,
           role,
+          avatar,
         });
       }
       return {

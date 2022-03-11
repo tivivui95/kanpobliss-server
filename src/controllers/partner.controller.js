@@ -1,7 +1,18 @@
 const partnerService = require("./../services/partner.service");
 class Partner {
   createPartner = async (req, res) => {
+    const image = [];
+    if (req.files) {
+      req.files.forEach((file) => {
+        const obj = {
+          name: `https://booking-client-project.herokuapp.com/image/${file.filename}`,
+        };
+        image.push(obj);
+      });
+      return res.json({ image });
+    }
     const { name, type, phone, location, images, email } = req.body;
+    console.log(images);
     const result = await partnerService.createPartner({
       name,
       type,
