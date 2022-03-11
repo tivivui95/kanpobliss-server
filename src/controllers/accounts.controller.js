@@ -11,6 +11,10 @@ class Accounts {
       role,
       avatar,
     } = req.body;
+    if (req.file) {
+      let avatar = `https://booking-server-project.herokuapp.com/image/${req.file.filename}`;
+      return res.json({ avatar });
+    }
     const result = await accountsServer.createAccounts({
       fullname,
       email,
@@ -22,7 +26,6 @@ class Accounts {
       avatar,
     });
     if (result.error) {
-      console.log(result);
       return res.json({
         statusCode: 400,
         message: result.error.details[0].message,
@@ -49,9 +52,7 @@ class Accounts {
       id,
       role,
       re_password,
-      avatar,
     } = req.body;
-    console.log(avatar);
     const result = await accountsServer.updateAccount({
       email,
       password,
@@ -61,7 +62,6 @@ class Accounts {
       id,
       role,
       re_password,
-      avatar,
     });
     return res.json({ result });
   };

@@ -22,6 +22,7 @@ class Accounts {
         re_password,
         password,
         role,
+        avatar,
       });
       if (result.error) {
         return result;
