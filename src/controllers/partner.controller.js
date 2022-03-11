@@ -5,7 +5,7 @@ class Partner {
     if (req.files) {
       req.files.forEach((file) => {
         const obj = {
-          name: `https://booking-client-project.herokuapp.com/image/${file.filename}`,
+          name: `https://booking-server-project.herokuapp.com/image/${file.filename}`,
         };
         image.push(obj);
       });
