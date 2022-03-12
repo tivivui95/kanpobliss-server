@@ -1,7 +1,7 @@
 const hotel = require("../models/hotels.model");
 const authen = require("./../authentication/authenCreateAccount");
 class Hotel {
-  createHotel = async ({ name, location, phone, email, qr }) => {
+  createHotel = async ({ name, location, phone, email, qr, images }) => {
     try {
       if (!name || !location || !phone || !email) {
         return {
@@ -21,7 +21,7 @@ class Hotel {
       if (authenEmail.error) {
         return authenEmail;
       }
-      await hotel.create({ name, location, phone, email, qr });
+      await hotel.create({ name, location, phone, email, qr, images });
       return {
         statusCode: 200,
         message: `Create hotel success!`,

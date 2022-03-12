@@ -1,4 +1,5 @@
 const accountsServer = require("../services/account.service");
+
 class Accounts {
   createAccount = async (req, res) => {
     try {
@@ -13,7 +14,7 @@ class Accounts {
         avatar,
       } = req.body;
       if (req.file) {
-        let avatar = `https://booking-server-project.herokuapp.com/image/${req.file.filename}`;
+        let avatar = `${process.env.URL_LOCALHOST}/image/${req.file.filename}`;
         return res.json({ avatar });
       }
       const result = await accountsServer.createAccounts({
