@@ -33,13 +33,12 @@ class Accounts {
           message: result.error.details[0].message,
         });
       }
+      return res.json({
+        result,
+      });
     } catch (error) {
       console.log(error);
     }
-
-    return res.json({
-      result,
-    });
   };
   destroyAccount = async (req, res) => {
     try {
