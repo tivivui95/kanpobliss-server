@@ -37,7 +37,6 @@ class Hotel {
   destroyeHotel = async (id) => {
     try {
       const findHotel = await hotel.findOne({ _id: id });
-      console.log(findHotel);
       if (!findHotel) {
         return {
           statusCode: 400,
@@ -57,7 +56,6 @@ class Hotel {
     }
   };
   updateHotel = async ({ id, name, location, phone }) => {
-    console.log(id);
     try {
       const findHotel = await hotel.findOne({ _id: id });
       if (!findHotel) {
@@ -79,7 +77,6 @@ class Hotel {
     }
   };
   getAllHotels = async (id) => {
-    console.log(id);
     try {
       if (id !== "null") {
         const paginate = 10;

@@ -1,8 +1,8 @@
 const hotelService = require("../services/hotel.service");
 class Hotel {
   createHotel = async (req, res) => {
+    console.log(process.env.URL_LOCALHOST);
     const image = [];
-    console.log(req.files);
     if (req.files) {
       req.files.forEach((file) => {
         const obj = {
@@ -13,7 +13,6 @@ class Hotel {
       return res.json({ image });
     }
     const { name, location, phone, email, qr, images } = req.body;
-    console.log(qr);
     const result = await hotelService.createHotel({
       name,
       location,
@@ -35,7 +34,6 @@ class Hotel {
   };
   updateHotel = async (req, res) => {
     const { id, name, location, phone } = req.body;
-    console.log(id, name, location, phone);
     const result = await hotelService.updateHotel({
       id,
       name,
