@@ -1,10 +1,22 @@
 const hotelService = require("../services/hotel.service");
+const fs = require("fs");
 class Hotel {
   createHotel = async (req, res) => {
-    console.log(process.env.URL_LOCALHOST);
     const image = [];
     if (req.files) {
       req.files.forEach((file) => {
+        var stats = fs.statSync(`src/public/${file.filename}`);
+        var fileSizeInBytes = stats.size;
+        const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
+        const i = parseInt(
+          Math.floor(Math.log(fileSizeInBytes) / Math.log(1024))
+        );
+        if (i == 0) {
+          console.log(bytes + " " + sizes[i]);
+          return;
+        }
+        console.log((bytes / Math.pow(1024, i)).toFixed(1) + " " + sizes[i]);
+        return;
         const obj = {
           name: `${process.env.URL_LOCALHOST}/image/${file.filename}`,
         };

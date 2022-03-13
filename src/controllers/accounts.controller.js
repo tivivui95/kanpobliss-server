@@ -2,6 +2,7 @@ const accountsServer = require("../services/account.service");
 
 class Accounts {
   createAccount = async (req, res) => {
+    console.log(req.file);
     try {
       const {
         fullname,
