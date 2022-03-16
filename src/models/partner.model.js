@@ -15,15 +15,8 @@ const schema = new mongoose.Schema({
       },
       list: [
         {
-          ingredient: "string",
-          dishes: "string",
-          price: "string",
-          images: [
-            {
-              name: String,
-            },
-          ],
-          reason: "string",
+       
+          type: Object,
         },
       ],
       description: "string",

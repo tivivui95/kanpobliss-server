@@ -5,18 +5,6 @@ class Hotel {
     const image = [];
     if (req.files) {
       req.files.forEach((file) => {
-        var stats = fs.statSync(`src/public/${file.filename}`);
-        var fileSizeInBytes = stats.size;
-        const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
-        const i = parseInt(
-          Math.floor(Math.log(fileSizeInBytes) / Math.log(1024))
-        );
-        if (i == 0) {
-          console.log(bytes + " " + sizes[i]);
-          return;
-        }
-        console.log((bytes / Math.pow(1024, i)).toFixed(1) + " " + sizes[i]);
-        return;
         const obj = {
           name: `${process.env.URL_LOCALHOST}/image/${file.filename}`,
         };

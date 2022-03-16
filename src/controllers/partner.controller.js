@@ -11,7 +11,8 @@ class Partner {
       });
       return res.json({ image });
     }
-    const { name, type, phone, location, images, email } = req.body;
+    const { name, type, phone, location, images, email, arrayTotalTypeManage } =
+      req.body;
     console.log(images);
     const result = await partnerService.createPartner({
       name,
@@ -20,6 +21,7 @@ class Partner {
       location,
       images,
       email,
+      arrayTotalTypeManage,
     });
     return res.json({ result });
   };
