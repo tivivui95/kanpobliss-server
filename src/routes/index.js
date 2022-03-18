@@ -3,6 +3,7 @@ const hotels = require("./hotel.route");
 const partners = require("./partner.route");
 const types = require("./type.route");
 const login = require("./login.route");
+const recommend = require("./recommend.route");
 module.exports = {
   run: (app) => {
     app.use("/", accounts);
@@ -10,5 +11,6 @@ module.exports = {
     app.use("/", partners);
     app.use("/", types);
     app.use("/", login);
+    app.use("/", recommend);
   },
 };

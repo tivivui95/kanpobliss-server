@@ -8,21 +8,6 @@ const schema = new mongoose.Schema({
       name: String,
     },
   ],
-  recommend: [
-    {
-      name: {
-        type: String,
-      },
-      list: [
-        {
-       
-          type: Object,
-        },
-      ],
-      description: "string",
-    },
-  ],
-
   email: "string",
   idHotel: "string",
   type: [{ type: String }],

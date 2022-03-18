@@ -21,7 +21,6 @@ class Partner {
       location,
       images,
       email,
-      arrayTotalTypeManage,
     });
     return res.json({ result });
   };
