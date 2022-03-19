@@ -4,7 +4,6 @@ const partnerModel = require("./../models/partner.model");
 const mongoose = require("mongoose");
 class Recommend {
   create = async (arr) => {
-    console.log(arr);
     const newArr = [];
     try {
       for (let i = 0; i < arr.length; i++) {
@@ -31,9 +30,11 @@ class Recommend {
             list: [{}],
           };
         }
+        arr[i].idPartner = findPartner._id;
         newArr.push(arr[i]);
       }
-      await recommendModel.create(arr);
+      console.log(newArr);
+      await recommendModel.create(newArr);
       console.log(`Create Recommend Successfully`);
       return {
         statusCode: 200,
@@ -81,24 +82,25 @@ class Recommend {
     idC,
     { name, price, description, ingredient, reason }
   ) => {
-    console.log(id, idC);
     try {
       const arr = [name, price, description, reason, ingredient];
+      console.log(arr);
+      console.log(id, idC);
       const recommend = await recommendModel.findById(id);
       recommend.list.forEach((e, i) => {
+        console.log(e);
         if (e._id == idC) {
           const key = Object.keys(e);
-          for (let j = 0; j < key.length; j++) {
+          for (let j = 0; j < key.length - 1; j++) {
             recommend.list[i][key[j]] = arr[j];
-            console.log(recommend.list[i][key[j]]);
           }
         }
       });
-      // console.log(recommend);
+      console.log(recommend);
       await recommendModel.findByIdAndUpdate(id, recommend);
       return {
         statusCode: 200,
-        message: "Delete Successfully !",
+        message: "Update Successfully !",
       };
     } catch (error) {
       console.log(error);

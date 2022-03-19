@@ -2,6 +2,16 @@ const recommendService = require("./../services/recommend.service");
 class Recommend {
   create = async (req, res) => {
     try {
+      const image = [];
+      if (req.files) {
+        req.files.forEach((file) => {
+          const obj = {
+            name: `${process.env.URL_LOCALHOST}/image/${file.filename}`,
+          };
+          image.push(obj);
+        });
+        return res.json({ image });
+      }
       const arr = req.body;
       const result = await recommendService.create(arr);
       return res.json(result);
