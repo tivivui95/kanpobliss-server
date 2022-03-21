@@ -3,7 +3,7 @@ const authen = require("./../authentication/authenCreateAccount");
 class Hotel {
   createHotel = async ({ name, location, phone, email, qr, images }) => {
     try {
-      if (!name || !location || !phone || !email) {
+      if (!name || !location || !email) {
         return {
           statusCode: 400,
           message: `Name or location or phone cannot be empty !`,

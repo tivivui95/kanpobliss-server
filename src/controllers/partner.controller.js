@@ -11,16 +11,15 @@ class Partner {
       });
       return res.json({ image });
     }
-    const { name, type, phone, location, images, email, arrayTotalTypeManage } =
-      req.body;
-    console.log(images);
+    const { name, type, images, email, description, linkB } = req.body;
+    console.log(name, type, images, email, description, linkB);
     const result = await partnerService.createPartner({
       name,
       type,
-      phone,
-      location,
       images,
       email,
+      description,
+      linkB,
     });
     return res.json({ result });
   };
@@ -30,20 +29,23 @@ class Partner {
     return res.json({ result });
   };
   updatePartner = async (req, res) => {
-    const { name, id, type, phone, location, images } = req.body;
+    const { name, id, type, description, linkB, images } = req.body;
     const result = await partnerService.updatePartner({
       name,
       id,
       type,
-      phone,
-      location,
+      description,
+      linkB,
       images,
     });
     return res.json({ result });
   };
   getAllPartner = async (req, res) => {
     const { id } = req.params;
-    const result = await partnerService.getAllPartner(id);
+    const { type, email } = req.query;
+    console.log(type);
+    console.log(email);
+    const result = await partnerService.getAllPartner(id, type, email);
     return res.json({
       result,
     });

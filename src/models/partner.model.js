@@ -8,8 +8,8 @@ const schema = new mongoose.Schema({
   name: {
     type: String,
   },
-  location: "string",
-  phone: "string",
+  description: "string",
+  linkB: "string",
   images: [
     {
       name: String,
@@ -18,7 +18,7 @@ const schema = new mongoose.Schema({
   idHotel: {
     type: "string",
   },
-  type: [{ type: String }],
+  type: String,
   email: {
     type: String,
   },

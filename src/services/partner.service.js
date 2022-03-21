@@ -4,15 +4,7 @@ const hotelsModel = require("./../models/hotels.model");
 const mongoose = require("mongoose");
 const hotels = require("./../models/hotels.model");
 class Partner {
-  createPartner = async ({
-    type,
-    name,
-    phone,
-    location,
-    images,
-    email,
-    arrayTotalTypeManage,
-  }) => {
+  createPartner = async ({ type, name, images, email, description, linkB }) => {
     try {
       const result = await authen.authenCreateAccounts({ email });
       if (result.error) {
@@ -25,22 +17,15 @@ class Partner {
           message: `Hotel has not been created, please create hotel before creating partners`,
         };
       }
-      const findPartner = await partnerModel.findOne({ email });
-      console.log(findPartner);
-      if (findPartner) {
-        return {
-          statusCode: 400,
-          message: `Partner already exists in the system, please update, do not create new !!!`,
-        };
-      }
+      console.log(email);
       await partnerModel.create({
         type,
         name,
-        phone,
-        location,
         images,
         idHotel: findHotels._id,
         email,
+        description,
+        linkB,
       });
       return {
         statusCode: 200,
@@ -76,7 +61,7 @@ class Partner {
       };
     }
   };
-  updatePartner = async ({ name, id, type, phone, location, images }) => {
+  updatePartner = async ({ name, id, type, description, linkB, images }) => {
     try {
       if (!id) {
         return {
@@ -87,8 +72,8 @@ class Partner {
       await partnerModel.findByIdAndUpdate(id, {
         name,
         type,
-        phone,
-        location,
+        description,
+        linkB,
         images,
       });
       return {
@@ -103,12 +88,13 @@ class Partner {
       };
     }
   };
-  getAllPartner = async (id) => {
+  getAllPartner = async (id, type, email) => {
+    console.log(id);
     id = id ? id : 1;
     try {
       const paginate = 10;
       const allPartner = await partnerModel
-        .find({})
+        .find({ type, email })
         .skip((id - 1) * paginate)
         .limit(paginate);
       if (allPartner) {

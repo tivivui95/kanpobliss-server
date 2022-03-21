@@ -17,12 +17,12 @@ class Login {
           message: "Account does not exist in the system !",
         };
       }
-      if (findAccount.role !== "admin") {
-        return {
-          statusCode: 400,
-          message: `Your account does not have enough access rights!!!`,
-        };
-      }
+      // if (findAccount.role !== "admin") {
+      //   return {
+      //     statusCode: 400,
+      //     message: `Your account does not have enough access rights!!!`,
+      //   };
+      // }
       const result = await bcrypt.compare(password, findAccount.password);
       const { _id, role, fullname, username, phone } = findAccount;
       if (quiz) {
