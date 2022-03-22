@@ -1,8 +1,8 @@
-const restaurantModel = require("./../models/restaurant.model");
+const spaModel = require("./../models/spa.model");
 class Spa {
   create = async ({ idResOrSpa, name, arrType, description, benefit }) => {
     try {
-      await restaurantModel.create({
+      await spaModel.create({
         idResOrSpa,
         name,
         arrType,
@@ -22,7 +22,7 @@ class Spa {
   };
   getAll = async () => {
     try {
-      const restaurants = await restaurantModel.find({});
+      const restaurants = await spaModel.find({});
       return {
         statusCode: 200,
         message: `Get All Restaurant Successfully !`,
@@ -32,9 +32,9 @@ class Spa {
       console.log(error);
     }
   };
-  getDetailsRestaurant = async (id) => {
+  getDetailsSpa = async (id) => {
     try {
-      const restaurant = await restaurantModel.find({ idResOrSpa: id });
+      const restaurant = await spaModel.find({ idResOrSpa: id });
       return {
         statusCode: 200,
         message: `Get  Restaurant Details Successfully !`,
@@ -44,7 +44,7 @@ class Spa {
   };
   updateSpa = async ({ name, arrType, description, benefit, id }) => {
     try {
-      await restaurantModel.findByIdAndUpdate(id, {
+      await spaModel.findByIdAndUpdate(id, {
         name,
         arrType,
         description,
@@ -64,7 +64,7 @@ class Spa {
   deleteSpa = async (id) => {
     console.log(id);
     try {
-      await restaurantModel.findByIdAndDelete(id);
+      await spaModel.findByIdAndDelete(id);
       return {
         statusCode: 200,
         message: "Delete Restaurant Successfully !",

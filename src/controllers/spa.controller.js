@@ -1,4 +1,4 @@
-const spaService = require("./../services/restaurant.service");
+const spaService = require("./../services/spa.service");
 class Spa {
   create = async (req, res) => {
     const { idResOrSpa, name, arrType, description, benefit } = req.body;

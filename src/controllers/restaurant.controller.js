@@ -17,7 +17,6 @@ class Restaurant {
   };
   getDetailsRestaurant = async (req, res) => {
     const { id } = req.params;
-    console.log(id);
     const result = await restaurantService.getDetailsRestaurant(id);
     return res.json({ result });
   };
