@@ -5,6 +5,7 @@ const types = require("./type.route");
 const login = require("./login.route");
 const recommend = require("./recommend.route");
 const recommendAll = require("./recommendAll.route");
+const restaurant = require("./restaurant.route");
 module.exports = {
   run: (app) => {
     app.use("/", accounts);
@@ -14,5 +15,6 @@ module.exports = {
     app.use("/", login);
     app.use("/", recommend);
     app.use("/", recommendAll);
+    app.use("/", restaurant);
   },
 };
