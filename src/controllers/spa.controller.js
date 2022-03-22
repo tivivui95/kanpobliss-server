@@ -1,8 +1,8 @@
-const restaurantService = require("./../services/restaurant.service");
-class Restaurant {
+const spaService = require("./../services/restaurant.service");
+class Spa {
   create = async (req, res) => {
     const { idResOrSpa, name, arrType, description, benefit } = req.body;
-    const result = await restaurantService.create({
+    const result = await spaService.create({
       idResOrSpa,
       name,
       arrType,
@@ -12,18 +12,17 @@ class Restaurant {
     return res.json({ result });
   };
   getAll = async (req, res) => {
-    const result = await restaurantService.getAll();
+    const result = await spaService.getAll();
     return res.json({ result });
   };
-  getDetailsRestaurant = async (req, res) => {
+  getDetailsSpa = async (req, res) => {
     const { id } = req.params;
-    console.log(id);
-    const result = await restaurantService.getDetailsRestaurant(id);
+    const result = await spaService.getDetailsSpa(id);
     return res.json({ result });
   };
-  updateRes = async (req, res) => {
+  updateSpa = async (req, res) => {
     const { name, arrType, description, benefit, id } = req.body;
-    const result = await restaurantService.updateRes({
+    const result = await spaService.updateSpa({
       name,
       arrType,
       description,
@@ -32,10 +31,10 @@ class Restaurant {
     });
     return res.json({ result });
   };
-  deleteRes = async (req, res) => {
+  deleteSpa = async (req, res) => {
     const { id } = req.params;
-    const result = await restaurantService.deleteRes(id);
+    const result = await spaService.deleteSpa(id);
     return res.json({ result });
   };
 }
-module.exports = new Restaurant();
+module.exports = new Spa();
