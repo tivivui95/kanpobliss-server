@@ -109,7 +109,6 @@ class Accounts {
           fullname,
           id,
           role,
-          avatar,
         });
         if (resultAuth.error) {
           result = resultAuth;
@@ -132,7 +131,6 @@ class Accounts {
               fullname,
               id,
               role,
-              avatar,
             });
           }
           result = {
