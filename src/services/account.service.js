@@ -112,23 +112,21 @@ class Accounts {
         });
         if (resultAuth.error) {
           result = resultAuth;
-        } else {
-          if (avatar) {
-            await accountsModel.findByIdAndUpdate(id, {
-              email,
-              username,
-              phone,
-              fullname,
-              id,
-              role,
-              avatar,
-            });
-          }
-          result = {
-            statusCode: 200,
-            message: `update account success `,
-          };
+          return result;
         }
+        await accountsModel.findByIdAndUpdate(id, {
+          email,
+          username,
+          phone,
+          fullname,
+          id,
+          role,
+          avatar,
+        });
+        result = {
+          statusCode: 200,
+          message: `update account success `,
+        };
         return result;
       }
       const result = await authen.authenCreateAccounts({
