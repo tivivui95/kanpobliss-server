@@ -112,5 +112,16 @@ class Partner {
       };
     }
   };
+  getAll = async () => {
+    try {
+      const partners = await partnerModel.find({});
+      return {
+        statusCode: 200,
+        partners,
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  };
 }
 module.exports = new Partner();

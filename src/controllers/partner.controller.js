@@ -50,5 +50,11 @@ class Partner {
       result,
     });
   };
+  getAll = async (req, res) => {
+    const result = await partnerService.getAll();
+    return res.json({
+      result,
+    });
+  };
 }
 module.exports = new Partner();

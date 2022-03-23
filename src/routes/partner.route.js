@@ -10,5 +10,6 @@ router.post(
 router.delete("/partner/delete/:id", partnerController.deletePartner);
 router.put("/partner/update", partnerController.updatePartner);
 router.get("/partner/getAll/:id", partnerController.getAllPartner);
+router.get("/partner/getAll", partnerController.getAll);
 
 module.exports = router;
