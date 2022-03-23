@@ -123,15 +123,6 @@ class Accounts {
               role,
               avatar,
             });
-          } else {
-            await accountsModel.findByIdAndUpdate(id, {
-              email,
-              username,
-              phone,
-              fullname,
-              id,
-              role,
-            });
           }
           result = {
             statusCode: 200,
