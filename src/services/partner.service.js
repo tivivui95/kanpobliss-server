@@ -1,8 +1,8 @@
 const partnerModel = require("./../models/partner.model");
 const authen = require("./../authentication/authenCreateAccount");
 const hotelsModel = require("./../models/hotels.model");
-const mongoose = require("mongoose");
-const hotels = require("./../models/hotels.model");
+const imagesModel = require("./../models/image");
+const imgF = require("./..//helpers/functionHandleCreateImg");
 class Partner {
   createPartner = async ({ type, name, images, email, description, linkB }) => {
     try {
@@ -18,15 +18,15 @@ class Partner {
         };
       }
       console.log(email);
-      await partnerModel.create({
+      const results = await partnerModel.create({
         type,
         name,
-        images,
         idHotel: findHotels._id,
         email,
         description,
         linkB,
       });
+      await imgF.saveImg(images, results);
       return {
         statusCode: 200,
         message: `Create partner success `,
@@ -62,6 +62,7 @@ class Partner {
     }
   };
   updatePartner = async ({ name, id, type, description, linkB, images }) => {
+    console.log(images);
     try {
       if (!id) {
         return {
@@ -81,7 +82,6 @@ class Partner {
         message: `Update partner success`,
       };
     } catch (error) {
-      console.log(error);
       return {
         statusCode: 400,
         message: `Update partner fail`,
@@ -89,14 +89,16 @@ class Partner {
     }
   };
   getAllPartner = async (id, type, email) => {
-    console.log(id);
     id = id ? id : 1;
     try {
       const paginate = 10;
-      const allPartner = await partnerModel
+
+      const res = await partnerModel
         .find({ type, email })
         .skip((id - 1) * paginate)
         .limit(paginate);
+
+      const allPartner = await imgF.getImg(res);
       if (allPartner) {
         return {
           statusCode: 200,

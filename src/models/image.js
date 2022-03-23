@@ -3,6 +3,7 @@ const schema = new mongoose.Schema({
   image: {
     type: String,
   },
+  idRef: String,
   createdAt: {
     type: Date,
     default: Date.now,

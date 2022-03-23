@@ -1,13 +1,16 @@
+const restaurant = require("../models/restaurant.model");
 const restaurantService = require("./../services/restaurant.service");
 class Restaurant {
   create = async (req, res) => {
-    const { idResOrSpa, name, arrType, description, benefit } = req.body;
+    const { idResOrSpa, name, arrType, description, benefit, images } =
+      req.body;
     const result = await restaurantService.create({
       idResOrSpa,
       name,
       arrType,
       description,
       benefit,
+      images,
     });
     return res.json({ result });
   };
@@ -17,17 +20,19 @@ class Restaurant {
   };
   getDetailsRestaurant = async (req, res) => {
     const { id } = req.params;
-    const result = await restaurantService.getDetailsRestaurant(id);
+    let result = await restaurantService.getDetailsRestaurant(id);
+    console.log(result);
     return res.json({ result });
   };
   updateRes = async (req, res) => {
-    const { name, arrType, description, benefit, id } = req.body;
+    const { name, arrType, description, benefit, id, images } = req.body;
     const result = await restaurantService.updateRes({
       name,
       arrType,
       description,
       benefit,
       id,
+      images,
     });
     return res.json({ result });
   };

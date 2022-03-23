@@ -33,12 +33,13 @@ class Hotel {
     });
   };
   updateHotel = async (req, res) => {
-    const { id, name, location, phone } = req.body;
+    const { id, name, location, phone, images } = req.body;
     const result = await hotelService.updateHotel({
       id,
       name,
       location,
       phone,
+      images,
     });
     return res.json({ result });
   };

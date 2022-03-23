@@ -90,5 +90,16 @@ class Accounts {
       console.log(error);
     }
   };
+  getAll = async (req, res) => {
+    const { id } = req.params;
+    console.log(id);
+    const result = await accountsServer.getAll(id);
+    return res.json({ result });
+  };
+  deleteImg = async (req, res) => {
+    const { id } = req.params;
+    const result = await accountsServer.deleteImg(id);
+    return res.json({ result });
+  };
 }
 module.exports = new Accounts();

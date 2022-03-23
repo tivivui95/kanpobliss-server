@@ -6,4 +6,6 @@ router.post("/account/create", upload.single("file"), accounts.createAccount);
 router.delete("/account/delete/:id", accounts.destroyAccount);
 router.put("/account/update", accounts.updateAccount);
 router.get("/account/getAll/:id", authenToken, accounts.getAllAccounts);
+router.get("/account/get/:id", accounts.getAll);
+router.delete("/img/delete/:id", accounts.deleteImg);
 module.exports = router;

@@ -6,6 +6,7 @@ const schema = new mongoose.Schema({
   benefit: String,
   name: String,
   description: String,
+  images: [],
   createdAt: {
     type: Date,
     default: Date.now,

@@ -11,6 +11,7 @@ const schema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  images: [],
   updateAt: {
     type: Date,
     default: Date.now,

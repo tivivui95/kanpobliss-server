@@ -5,11 +5,7 @@ const schema = new mongoose.Schema({
   phone: "string",
   email: "string",
   qr: "string",
-  images: [
-    {
-      name: String,
-    },
-  ],
+  images: [],
   createdAt: {
     type: Date,
     default: Date.now,

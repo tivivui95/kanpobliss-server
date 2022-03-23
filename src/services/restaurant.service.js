@@ -1,14 +1,25 @@
 const restaurantModel = require("./../models/restaurant.model");
+const mongoose = require("mongoose");
+const imgF = require("./../helpers/functionHandleCreateImg");
+const imagesModel = require("./../models/image");
 class Restaurant {
-  create = async ({ idResOrSpa, name, arrType, description, benefit }) => {
+  create = async ({
+    idResOrSpa,
+    name,
+    arrType,
+    description,
+    benefit,
+    images,
+  }) => {
     try {
-      await restaurantModel.create({
+      const result = await restaurantModel.create({
         idResOrSpa,
         name,
         arrType,
         description,
         benefit,
       });
+      await imgF.saveImg(images, result);
       return {
         statusCode: 200,
         message: `Create Restaurant Successfully !`,
@@ -32,24 +43,28 @@ class Restaurant {
       console.log(error);
     }
   };
-  getDetailsSpa = async (id) => {
+  getDetailsRestaurant = async (id) => {
     try {
-      const restaurant = await restaurantModel.find({ idResOrSpa: id });
+      let res = await restaurantModel.find({ idResOrSpa: id });
+      const restaurant = await imgF.getImg(res);
       return {
         statusCode: 200,
         message: `Get  Restaurant Details Successfully !`,
         restaurant,
       };
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
-  updateRes = async ({ name, arrType, description, benefit, id }) => {
+  updateRes = async ({ name, arrType, description, benefit, id, images }) => {
     try {
-      await restaurantModel.findByIdAndUpdate(id, {
+      const result = await restaurantModel.findByIdAndUpdate(id, {
         name,
         arrType,
         description,
         benefit,
       });
+      await imgF.saveImg(images, result);
       return {
         statusCode: 200,
         message: "Update Restaurant Successfully !",

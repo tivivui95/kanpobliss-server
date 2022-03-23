@@ -1,14 +1,24 @@
 const spaModel = require("./../models/spa.model");
+const imagesModel = require("./../models/image");
+const imgF = require("./../helpers/functionHandleCreateImg");
 class Spa {
-  create = async ({ idResOrSpa, name, arrType, description, benefit }) => {
+  create = async ({
+    idResOrSpa,
+    name,
+    arrType,
+    description,
+    benefit,
+    images,
+  }) => {
     try {
-      await spaModel.create({
+      const result = await spaModel.create({
         idResOrSpa,
         name,
         arrType,
         description,
         benefit,
       });
+      imgF.saveImg(images, result);
       return {
         statusCode: 200,
         message: `Create Restaurant Successfully !`,
@@ -16,7 +26,7 @@ class Spa {
     } catch (error) {
       return {
         statusCode: 400,
-        message: `Create Restaurant Fail !`,
+        message: `Create Spa Fail !`,
       };
     }
   };
@@ -25,7 +35,7 @@ class Spa {
       const restaurants = await spaModel.find({});
       return {
         statusCode: 200,
-        message: `Get All Restaurant Successfully !`,
+        message: `Get All Spa Successfully !`,
         restaurants,
       };
     } catch (error) {
@@ -34,13 +44,23 @@ class Spa {
   };
   getDetailsSpa = async (id) => {
     try {
-      const restaurant = await spaModel.find({ idResOrSpa: id });
+      const res = await spaModel.find({ idResOrSpa: id });
+      const restaurant = [];
+      console.log(res.length);
+      for (let i = 0; i < res.length; i++) {
+        const findImg = await imagesModel.find({ idRef: res[i]._id });
+        res[i].images = findImg;
+        restaurant.push(res[i]);
+      }
+      console.log(restaurant);
       return {
         statusCode: 200,
-        message: `Get  Restaurant Details Successfully !`,
+        message: `Get  Spa Details Successfully !`,
         restaurant,
       };
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
   updateSpa = async ({ name, arrType, description, benefit, id }) => {
     try {
@@ -52,12 +72,12 @@ class Spa {
       });
       return {
         statusCode: 200,
-        message: "Update Restaurant Successfully !",
+        message: "Update Spa Successfully !",
       };
     } catch (error) {
       return {
         statusCode: 400,
-        message: "Update Restaurant Fail !",
+        message: "Update Spa Fail !",
       };
     }
   };
@@ -67,12 +87,12 @@ class Spa {
       await spaModel.findByIdAndDelete(id);
       return {
         statusCode: 200,
-        message: "Delete Restaurant Successfully !",
+        message: "Delete Spa Successfully !",
       };
     } catch (error) {
       return {
         statusCode: 400,
-        message: "Delete Restaurant Fail !",
+        message: "Delete Spa Fail !",
       };
     }
   };

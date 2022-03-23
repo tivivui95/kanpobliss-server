@@ -10,11 +10,7 @@ const schema = new mongoose.Schema({
   },
   description: "string",
   linkB: "string",
-  images: [
-    {
-      name: String,
-    },
-  ],
+  images: [],
   idHotel: {
     type: "string",
   },

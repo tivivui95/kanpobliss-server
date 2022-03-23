@@ -1,13 +1,15 @@
 const spaService = require("./../services/spa.service");
 class Spa {
   create = async (req, res) => {
-    const { idResOrSpa, name, arrType, description, benefit } = req.body;
+    const { idResOrSpa, name, arrType, description, benefit, images } =
+      req.body;
     const result = await spaService.create({
       idResOrSpa,
       name,
       arrType,
       description,
       benefit,
+      images,
     });
     return res.json({ result });
   };

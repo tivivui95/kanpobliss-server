@@ -1,5 +1,6 @@
 const hotel = require("../models/hotels.model");
 const authen = require("./../authentication/authenCreateAccount");
+const imgF = require("./../helpers/functionHandleCreateImg");
 class Hotel {
   createHotel = async ({ name, location, phone, email, qr, images }) => {
     try {
@@ -21,7 +22,14 @@ class Hotel {
       if (authenEmail.error) {
         return authenEmail;
       }
-      await hotel.create({ name, location, phone, email, qr, images });
+      const result = await hotel.create({
+        name,
+        location,
+        phone,
+        email,
+        qr,
+      });
+      imgF.saveImg(images, result);
       return {
         statusCode: 200,
         message: `Create hotel success!`,
@@ -55,7 +63,7 @@ class Hotel {
       };
     }
   };
-  updateHotel = async ({ id, name, location, phone }) => {
+  updateHotel = async ({ id, name, location, phone, images }) => {
     try {
       const findHotel = await hotel.findOne({ _id: id });
       if (!findHotel) {
@@ -64,7 +72,12 @@ class Hotel {
           message: `Hotel not found`,
         };
       }
-      await hotel.findByIdAndUpdate(id, { name, location, phone });
+      const result = await hotel.findByIdAndUpdate(id, {
+        name,
+        location,
+        phone,
+      });
+      await imgF.saveImg(images, result);
       return {
         statusCode: 200,
         message: `Update hotel info success`,
@@ -80,10 +93,11 @@ class Hotel {
     try {
       if (id !== "null") {
         const paginate = 10;
-        const allHotels = await hotel
+        const res = await hotel
           .find({})
           .skip((id - 1) * paginate)
           .limit(paginate);
+        const allHotels = await imgF.getImg(res);
         if (allHotels) {
           return {
             statusCode: 200,
