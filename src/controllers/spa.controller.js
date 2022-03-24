@@ -33,6 +33,11 @@ class Spa {
     });
     return res.json({ result });
   };
+  getOne = async (req, res) => {
+    const { id } = req.params;
+    const result = await spaService.getOne(id);
+    return res.json({ result });
+  };
   deleteSpa = async (req, res) => {
     const { id } = req.params;
     const result = await spaService.deleteSpa(id);

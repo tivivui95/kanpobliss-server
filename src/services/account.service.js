@@ -100,35 +100,6 @@ class Accounts {
     avatar,
   }) => {
     try {
-      if (!password) {
-        let result;
-        const resultAuth = await authenUpdateAccount.authenUpdateAccount({
-          email,
-          username,
-          phone,
-          fullname,
-          id,
-          role,
-        });
-        if (resultAuth.error) {
-          result = resultAuth;
-          return result;
-        }
-        await accountsModel.findByIdAndUpdate(id, {
-          email,
-          username,
-          phone,
-          fullname,
-          id,
-          role,
-          avatar,
-        });
-        result = {
-          statusCode: 200,
-          message: `update account success `,
-        };
-        return result;
-      }
       const result = await authen.authenCreateAccounts({
         fullname,
         email,

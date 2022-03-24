@@ -96,5 +96,13 @@ class Spa {
       };
     }
   };
+  getOne = async (id) => {
+    try {
+      const spaDetails = await spaModel.findOne({ _id: id });
+      return { statusCode: 200, spaDetails };
+    } catch (error) {
+      console.log(error);
+    }
+  };
 }
 module.exports = new Spa();
