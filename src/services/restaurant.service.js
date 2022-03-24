@@ -33,7 +33,8 @@ class Restaurant {
   };
   getAll = async () => {
     try {
-      const restaurants = await restaurantModel.find({});
+      const res = await restaurantModel.find({});
+      const restaurants = await imgF.getImg(res);
       return {
         statusCode: 200,
         message: `Get All Restaurant Successfully !`,
