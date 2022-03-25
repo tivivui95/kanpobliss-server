@@ -2,6 +2,16 @@ const restaurant = require("../models/restaurant.model");
 const restaurantService = require("./../services/restaurant.service");
 class Restaurant {
   create = async (req, res) => {
+    const image = [];
+    if (req.files) {
+      req.files.forEach((file) => {
+        const obj = {
+          name: `${process.env.URL_LOCALHOST}/image/${file.filename}`,
+        };
+        image.push(obj);
+      });
+      return res.json({ image });
+    }
     const { idResOrSpa, name, arrType, description, benefit, images } =
       req.body;
     const result = await restaurantService.create({
