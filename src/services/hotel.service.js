@@ -2,7 +2,7 @@ const hotel = require("../models/hotels.model");
 const authen = require("./../authentication/authenCreateAccount");
 const imgF = require("./../helpers/functionHandleCreateImg");
 class Hotel {
-  createHotel = async ({ name, location, phone, email, qr, images }) => {
+  createHotel = async ({ name, location, phone, email, qr, images, PartnerID }) => {
     try {
       if (!name || !location || !email) {
         return {
@@ -28,6 +28,7 @@ class Hotel {
         phone,
         email,
         qr,
+        PartnerID,
       });
       imgF.saveImg(images, result);
       return {

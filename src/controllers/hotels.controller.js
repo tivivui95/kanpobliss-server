@@ -1,5 +1,6 @@
 const hotelService = require("../services/hotel.service");
 const fs = require("fs");
+const axios = require('axios');
 class Hotel {
   createHotel = async (req, res) => {
     const image = [];
@@ -12,7 +13,7 @@ class Hotel {
       });
       return res.json({ image });
     }
-    const { name, location, phone, email, qr, images } = req.body;
+    const { name, location, phone, email, qr, images, PartnerID } = req.body;
     const result = await hotelService.createHotel({
       name,
       location,
@@ -20,6 +21,7 @@ class Hotel {
       email,
       qr,
       images,
+      PartnerID,
     });
     return res.json({
       result,
@@ -27,7 +29,23 @@ class Hotel {
   };
   destroyHotel = async (req, res) => {
     const { id } = req.params;
+    try {
+      const hotelData = await axios.get('http://localhost:9000/hotel/getAll/' + id);
+      const len = JSON.parse(JSON.stringify(hotelData.data.result)).hotels.length;
+      for (let index = 0; index < len; index++) {
+        const data = JSON.stringify(hotelData.data.result.hotels[index]);
+        const newdata = JSON.parse(data);
+        if (newdata._id == id) {
+          const detroy = await axios.delete('http://localhost:9000/partner/delete/' + newdata.PartnerID);
+        }
+          
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
     const result = await hotelService.destroyeHotel(id);
+
     return res.json({
       result,
     });
